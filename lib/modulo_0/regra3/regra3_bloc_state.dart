@@ -1,10 +1,3 @@
-enum Regra3StateField {
-  fieldValueA,
-  fieldValueA1,
-  fieldValueB,
-  fieldValueB1,
-}
-
 abstract class Regra3State {
   final double? valueA;
   final double? valueA1;
@@ -25,17 +18,6 @@ abstract class Regra3State {
           valueB: state.valueB,
           valueB1: state.valueB1,
         );
-
-  Regra3State.field({
-    required Regra3State state,
-    required Regra3StateField field,
-    required double? value,
-  }) : this(
-          valueA: field == Regra3StateField.fieldValueA ? value : state.valueA,
-          valueA1: field == Regra3StateField.fieldValueA1 ? value : state.valueA1,
-          valueB: field == Regra3StateField.fieldValueB ? value : state.valueB,
-          valueB1: field == Regra3StateField.fieldValueB1 ? value : state.valueB1,
-        );
 }
 
 class Regra3StateInit extends Regra3State {
@@ -48,14 +30,17 @@ class Regra3StateInit extends Regra3State {
 
   Regra3StateInit.init();
 
-  Regra3StateInit.field({
+  Regra3StateInit.fields({
     required Regra3State state,
-    required Regra3StateField field,
-    required double? value,
-  }) : super.field(
-          state: state,
-          field: field,
-          value: value,
+    double? Function()? valueA,
+    double? Function()? valueA1,
+    double? Function()? valueB,
+    double? Function()? valueB1,
+  }) : this(
+          valueA: valueA != null ? valueA() : state.valueA,
+          valueA1: valueA1 != null ? valueA1() : state.valueA1,
+          valueB: valueB != null ? valueB() : state.valueB,
+          valueB1: valueB1 != null ? valueB1() : state.valueB1,
         );
 }
 
@@ -67,8 +52,13 @@ class Regra3StateResult extends Regra3State {
   final double valueX;
   final String fieldX;
 
-
-  Regra3StateResult(Regra3State state, this.valueX, this.fieldX) : super.state(state);
+  Regra3StateResult(Regra3State state, this.valueX, this.fieldX)
+      : super(
+          valueA: state.valueA ?? valueX,
+          valueA1: state.valueA1 ?? valueX,
+          valueB: state.valueB ?? valueX,
+          valueB1: state.valueB1 ?? valueX,
+        );
 
   String get result => "$fieldX - $valueX";
 }

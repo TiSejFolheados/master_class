@@ -14,35 +14,19 @@ class Regra3Bloc extends Bloc<Regra3Event, Regra3State> {
   }
 
   void _valueAChanged(Regra3ValueAChanged event, Emitter<Regra3State> emitter) {
-    emitter(Regra3StateInit.field(
-      state: state,
-      field: Regra3StateField.fieldValueA,
-      value: event.valueA,
-    ));
+    emitter(Regra3StateInit.fields(state: state, valueA: () => event.valueA));
   }
 
   void _valueA1Changed(Regra3ValueA1Changed event, Emitter<Regra3State> emitter) {
-    emitter(Regra3StateInit.field(
-      state: state,
-      field: Regra3StateField.fieldValueA1,
-      value: event.valueA1,
-    ));
+    emitter(Regra3StateInit.fields(state: state, valueA1: () => event.valueA1));
   }
 
   void _valueBChanged(Regra3ValueBChanged event, Emitter<Regra3State> emitter) {
-    emitter(Regra3StateInit.field(
-      state: state,
-      field: Regra3StateField.fieldValueB,
-      value: event.valueB,
-    ));
+    emitter(Regra3StateInit.fields(state: state, valueB: () => event.valueB));
   }
 
   void _valueB1Changed(Regra3ValueB1Changed event, Emitter<Regra3State> emitter) {
-    emitter(Regra3StateInit.field(
-      state: state,
-      field: Regra3StateField.fieldValueB1,
-      value: event.valueB1,
-    ));
+    emitter(Regra3StateInit.fields(state: state, valueB1: () => event.valueB1));
   }
 
   void _reset(Regra3Reset event, Emitter<Regra3State> emitter) {
@@ -61,13 +45,7 @@ class Regra3Bloc extends Bloc<Regra3Event, Regra3State> {
       final String fieldNull = regra3.fieldNull();
       final double calc = regra3.calc(fieldNull);
 
-      Regra3StateInit newState = Regra3StateInit.field(
-          state: state,
-          field: Regra3StateField.values.firstWhere(
-            (Regra3StateField element) => element.name == "fieldValue$fieldNull",
-          ),
-          value: calc);
-      emitter(Regra3StateLoading(newState));
+      emitter(Regra3StateLoading(state));
 
       await Future.delayed(const Duration(seconds: 1));
 

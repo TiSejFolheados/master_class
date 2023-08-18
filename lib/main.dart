@@ -1,6 +1,5 @@
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
-import 'package:master_class/modulo_0/imc/imc_page.dart';
 import 'package:master_class/modulo_0/modulo0_menu_page.dart';
 
 void main() {
