@@ -1,4 +1,4 @@
-abstract class Regra3State {
+sealed class Regra3State {
   final double? valueA;
   final double? valueA1;
   final double? valueB;

@@ -3,12 +3,10 @@ import 'dart:math';
 class Vigenere {
   final String chars = "ABCDEFGHIJKLMNOPQRSTUVXWYZ";
 
-  String text;
-  String? key;
+  final String text;
+  late String? key;
 
-  Vigenere(this.text, {this.key}) {
-    text = text.toUpperCase();
-  }
+  Vigenere({required String text, this.key}) : text = text.toUpperCase();
 
   void geraKey() {
     Random random = Random();
@@ -18,6 +16,10 @@ class Vigenere {
   String encode() {
     if (key == null) {
       geraKey();
+    }
+
+    if (key!.length != text.length) {
+      throw Exception("A key deve ter o mesmo tamanho do texto");
     }
 
     List<int> charsText = text.codeUnits;
@@ -32,11 +34,13 @@ class Vigenere {
     }));
   }
 
-  String decode(){
-    if( key == null){
+  String decode() {
+    if (key == null) {
       throw Exception("Não informada a chave Key!");
     }
-
+    if (key!.length != text.length) {
+      throw Exception("A key deve ter o mesmo tamanho do texto");
+    }
     List<int> charsText = text.codeUnits;
     List<int> charsKey = key!.codeUnits;
 

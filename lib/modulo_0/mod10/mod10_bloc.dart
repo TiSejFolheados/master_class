@@ -25,7 +25,7 @@ class Mod10Bloc extends Bloc<Mod10Event, Mod10State> {
 
         await Future.delayed(const Duration(seconds: 1));
 
-        final Mod10 mod10 = Mod10(state.number);
+        final mod10 = Mod10(state.number);
         if (mod10.valida()) {
           emitter(Mod10StateMod10Valid(state));
         } else {

@@ -4,13 +4,14 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:master_class/modulo_0/mod10/mod10_bloc.dart';
 import 'package:master_class/modulo_0/mod10/mod10_bloc_event.dart';
 import 'package:master_class/modulo_0/mod10/mod10_bloc_state.dart';
+import 'package:master_class/util/widget/appbar_default.dart';
 import 'package:master_class/util/widget/button_loading.dart';
 import 'package:master_class/util/widget/card_result.dart';
 import 'package:master_class/util/widget/input_text.dart';
 
 class Mod10Page extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final MaskTextInputFormatter maskNumber = MaskTextInputFormatter(
+  final _maskNumber = MaskTextInputFormatter(
     mask: '#### #### #### ####',
     filter: {"#": RegExp(r'[0-9]')},
     type: MaskAutoCompletionType.lazy,
@@ -21,11 +22,9 @@ class Mod10Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => Mod10Bloc(),
+      create: (context) => Mod10Bloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Valida Cartão"),
-        ),
+        appBar: const AppBarDefault("Valida Cartão").build(),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(18),
@@ -35,43 +34,30 @@ class Mod10Page extends StatelessWidget {
                 Card(
                   child: Form(
                     key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        children: [
-                          _numberField(),
-                          _validadeButton(context),
-                        ],
-                      ),
-                    ),
+                    child: BlocBuilder<Mod10Bloc, Mod10State>(builder: (context, state) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          children: [
+                            _numberField(context, state),
+                            _validadeButton(context, state),
+                          ],
+                        ),
+                      );
+                    }),
                   ),
                 ),
                 BlocBuilder<Mod10Bloc, Mod10State>(
                   builder: (BuildContext context, Mod10State state) {
                     if (state is Mod10StateError) {
-                      return CardResult(
-                        text: state.error,
-                        isColor: true,
-                        isError: true,
-                        isValid: false,
-                      );
+                      return CardResult.error(text: state.error);
                     }
 
                     if (state is Mod10StateMod10Invalid) {
-                      return const CardResult(
-                        text: "Cartão Inválido!",
-                        isColor: true,
-                        isError: false,
-                        isValid: false,
-                      );
+                      return const CardResult.invalid(text: "Cartão Inválido!");
                     }
                     if (state is Mod10StateMod10Valid) {
-                      return const CardResult(
-                        text: "Cartão Válido!",
-                        isColor: true,
-                        isError: false,
-                        isValid: true,
-                      );
+                      return const CardResult.valid(text: "Cartão Válido!");
                     }
 
                     return Container();
@@ -85,44 +71,38 @@ class Mod10Page extends StatelessWidget {
     );
   }
 
-  Widget _numberField() {
-    return BlocBuilder<Mod10Bloc, Mod10State>(
-      builder: (BuildContext context, Mod10State state) {
-        return InputText(
-          enabled: state is! Mod10StateLoading,
-          hintText: "Digite o número do Cartão",
-          label: "Cartão Número",
-          suffixIcon: state is Mod10StateMod10Valid
-              ? const Icon(Icons.check, color: Colors.green)
-              : state is Mod10StateMod10Invalid
+  Widget _numberField(BuildContext context, Mod10State state) {
+    return InputText(
+      enabled: state is! Mod10StateLoading,
+      hintText: "Digite o número do Cartão",
+      label: "Cartão Número",
+      suffixIcon: state is Mod10StateMod10Valid
+          ? const Icon(Icons.check, color: Colors.green)
+          : state is Mod10StateMod10Invalid
               ? const Icon(Icons.clear, color: Colors.red)
               : null,
-          keyboardType: TextInputType.number,
-          inputFormatters: [maskNumber],
-          validator: (String? value) => state.isValidNumber
-              ? state is Mod10StateValidationError
+      keyboardType: TextInputType.number,
+      inputFormatters: [_maskNumber],
+      validator: (String? value) => state.isValidNumber
+          ? state is Mod10StateValidationError
               ? "O número informado não é válido!"
               : null
-              : "O campo Cartão Número é obrigatório!",
-          onChange: (String value) => context.read<Mod10Bloc>().add(Mod10NumberChanged(value)),
-        );
-      },
+          : "O campo Cartão Número é obrigatório!",
+      onChange: (String value) => context.read<Mod10Bloc>().add(Mod10NumberChanged(value)),
     );
   }
 
-  Widget _validadeButton(BuildContext context) {
-    return BlocBuilder<Mod10Bloc, Mod10State>(builder: (BuildContext context, Mod10State state) {
-      final bool isLoading = state is Mod10StateLoading;
-      final bool reset = !isLoading && (state is Mod10StateError || state is Mod10StateMod10Valid || state is Mod10StateMod10Invalid);
-      String label = reset ? "Limpar" : "Validar Cartão";
-      return Padding(
-          padding: const EdgeInsets.only(top: 32),
-          child: LoadingButton(
-            onPressed: isLoading ? null : () => _onPressedValidadeButton(context, reset),
-            isLoading: isLoading,
-            label: label,
-          ));
-    });
+  Widget _validadeButton(BuildContext context, Mod10State state) {
+    final bool isLoading = state is Mod10StateLoading;
+    final bool reset = !isLoading && (state is Mod10StateError || state is Mod10StateMod10Valid || state is Mod10StateMod10Invalid);
+    String label = reset ? "Limpar" : "Validar Cartão";
+    return Padding(
+        padding: const EdgeInsets.only(top: 32),
+        child: LoadingButton(
+          onPressed: isLoading ? null : () => _onPressedValidadeButton(context, reset),
+          isLoading: isLoading,
+          label: label,
+        ));
   }
 
   void _onPressedValidadeButton(BuildContext context, bool reset) {

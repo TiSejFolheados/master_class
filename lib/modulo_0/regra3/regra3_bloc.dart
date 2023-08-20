@@ -35,15 +35,15 @@ class Regra3Bloc extends Bloc<Regra3Event, Regra3State> {
 
   void _calcular(Regra3Calc event, Emitter<Regra3State> emitter) async {
     try {
-      final Regra3 regra3 = Regra3(
+      final regra3 = Regra3(
         valueA: state.valueA,
         valueA1: state.valueA1,
         valueB: state.valueB,
         valueB1: state.valueB1,
       );
 
-      final String fieldNull = regra3.fieldNull();
-      final double calc = regra3.calc(fieldNull);
+      final fieldNull = regra3.fieldNull();
+      final calc = regra3.calc(fieldNull);
 
       emitter(Regra3StateLoading(state));
 

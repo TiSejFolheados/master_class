@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:master_class/modulo_0/cpf/cpf_page.dart';
+import 'package:master_class/modulo_0/dot_env/dot_env_page.dart';
 import 'package:master_class/modulo_0/fibonacci/fibonacci_page.dart';
 import 'package:master_class/modulo_0/imc/imc_page.dart';
 import 'package:master_class/modulo_0/mod10/mod10_page.dart';
 import 'package:master_class/modulo_0/regra3/regra3_page.dart';
+import 'package:master_class/modulo_0/vigenere/vigenere_page.dart';
 import 'package:master_class/util/navigator_util.dart';
 
 class Modulo0MenuPage extends StatelessWidget {
@@ -26,6 +28,8 @@ class Modulo0MenuPage extends StatelessWidget {
                   _menuItem(context: context, textMenu: "Regra 3", classe: Regra3Page()),
                   _menuItem(context: context, textMenu: "Valida CPF", classe: CpfPage()),
                   _menuItem(context: context, textMenu: "Valida Cartão", classe: Mod10Page()),
+                  _menuItem(context: context, textMenu: "Vigenere", classe: VigenerePage()),
+                  _menuItem(context: context, textMenu: "DotEnv", classe: DotEnvPage()),
                 ],
               ),
             ),

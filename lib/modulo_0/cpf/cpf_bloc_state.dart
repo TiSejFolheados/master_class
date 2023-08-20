@@ -1,4 +1,4 @@
-abstract class CpfState {
+sealed class CpfState {
   final String number;
 
   CpfState(this.number);

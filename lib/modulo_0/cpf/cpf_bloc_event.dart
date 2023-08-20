@@ -1,4 +1,4 @@
-abstract class CpfEvent {}
+sealed class CpfEvent {}
 
 class CpfNumberChanged extends CpfEvent {
   final String number;

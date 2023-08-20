@@ -24,7 +24,7 @@ class FibonacciBloc extends Bloc<FibonacciEvent, FibonacciState> {
 
       await Future.delayed(const Duration(seconds: 1));
 
-      final List<int> sequencia = Fibonacci.sequence(state.termos!);
+      final sequencia = Fibonacci.sequence(state.termos!);
       emitter(FibonacciStateResult(state, sequencia));
     } else {
       emitter(FibonacciStateValidationError(state));

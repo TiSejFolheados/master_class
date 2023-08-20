@@ -4,24 +4,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:master_class/modulo_0/regra3/regra3_bloc.dart';
 import 'package:master_class/modulo_0/regra3/regra3_bloc_event.dart';
 import 'package:master_class/modulo_0/regra3/regra3_bloc_state.dart';
+import 'package:master_class/util/widget/appbar_default.dart';
 import 'package:master_class/util/widget/button_loading.dart';
 import 'package:master_class/util/widget/card_result.dart';
 import 'package:master_class/util/widget/input_text.dart';
 
 class Regra3Page extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _controllerText = TextEditingController();
+  final _controllerText = TextEditingController();
 
   Regra3Page({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => Regra3Bloc(),
+      create: (context) => Regra3Bloc(),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Regra de 3"),
-        ),
+        appBar: const AppBarDefault("Regra de 3").build(),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(18),
@@ -33,7 +32,7 @@ class Regra3Page extends StatelessWidget {
                   child: Form(
                     key: _formKey,
                     child: BlocBuilder<Regra3Bloc, Regra3State>(
-                      builder: (BuildContext context, Regra3State state) {
+                      builder: (context, state) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -50,7 +49,7 @@ class Regra3Page extends StatelessWidget {
                                       field: "A",
                                       label: "A",
                                       hintText: "informe A",
-                                      onChanged: (String value) => context.read<Regra3Bloc>().add(Regra3ValueAChanged(value)),
+                                      onChanged: (value) => context.read<Regra3Bloc>().add(Regra3ValueAChanged(value)),
                                     ),
                                   )),
                                   Expanded(
@@ -62,7 +61,7 @@ class Regra3Page extends StatelessWidget {
                                       field: "A1",
                                       label: "A1",
                                       hintText: "informe A1",
-                                      onChanged: (String value) => context.read<Regra3Bloc>().add(Regra3ValueA1Changed(value)),
+                                      onChanged: (value) => context.read<Regra3Bloc>().add(Regra3ValueA1Changed(value)),
                                     ),
                                   )),
                                 ],
@@ -79,7 +78,7 @@ class Regra3Page extends StatelessWidget {
                                       field: "B",
                                       label: "B",
                                       hintText: "informe B",
-                                      onChanged: (String value) => context.read<Regra3Bloc>().add(Regra3ValueBChanged(value)),
+                                      onChanged: (value) => context.read<Regra3Bloc>().add(Regra3ValueBChanged(value)),
                                     ),
                                   )),
                                   Expanded(
@@ -91,13 +90,13 @@ class Regra3Page extends StatelessWidget {
                                         field: "B1",
                                         label: "B1",
                                         hintText: "informe B1",
-                                        onChanged: (String value) => context.read<Regra3Bloc>().add(Regra3ValueB1Changed(value)),
+                                        onChanged: (value) => context.read<Regra3Bloc>().add(Regra3ValueB1Changed(value)),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
-                              _calcButton(context),
+                              _calcButton(context, state),
                             ],
                           ),
                         );
@@ -106,23 +105,13 @@ class Regra3Page extends StatelessWidget {
                   ),
                 ),
                 BlocBuilder<Regra3Bloc, Regra3State>(
-                  builder: (BuildContext context, Regra3State state) {
+                  builder: (context, state) {
                     if (state is Regra3StateError) {
-                      return CardResult(
-                        text: state.error,
-                        isColor: true,
-                        isError: true,
-                        isValid: false,
-                      );
+                      return CardResult.error(text: state.error);
                     }
 
                     if (state is Regra3StateResult) {
-                      return CardResult(
-                        text: state.result,
-                        isColor: true,
-                        isError: false,
-                        isValid: true,
-                      );
+                      return CardResult.valid(text: state.result);
                     }
 
                     return Container();
@@ -168,22 +157,18 @@ class Regra3Page extends StatelessWidget {
     );
   }
 
-  Widget _calcButton(BuildContext context) {
-    return BlocBuilder<Regra3Bloc, Regra3State>(
-      builder: (BuildContext context, Regra3State state) {
-        final bool isLoading = state is Regra3StateLoading;
-        final bool reset = !isLoading && (state is Regra3StateError || state is Regra3StateResult);
-        String label = reset ? "Limpar" : "Calcular";
+  Widget _calcButton(BuildContext context, Regra3State state) {
+    final bool isLoading = state is Regra3StateLoading;
+    final bool reset = !isLoading && (state is Regra3StateError || state is Regra3StateResult);
+    String label = reset ? "Limpar" : "Calcular";
 
-        return Padding(
-            padding: const EdgeInsets.only(top: 32),
-            child: LoadingButton(
-              onPressed: isLoading ? null : () => _onPressedCalcButton(context, reset),
-              isLoading: isLoading,
-              label: label,
-            ));
-      },
-    );
+    return Padding(
+        padding: const EdgeInsets.only(top: 32),
+        child: LoadingButton(
+          onPressed: isLoading ? null : () => _onPressedCalcButton(context, reset),
+          isLoading: isLoading,
+          label: label,
+        ));
   }
 
   void _onPressedCalcButton(BuildContext context, bool reset) {

@@ -1,4 +1,4 @@
-abstract class FibonacciState {
+sealed class FibonacciState {
   final int? termos;
 
   FibonacciState(this.termos);

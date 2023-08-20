@@ -1,4 +1,4 @@
-abstract class ImcEvent {}
+sealed class ImcEvent {}
 
 class ImcPesoChanged extends ImcEvent {
   final double? peso;

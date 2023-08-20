@@ -25,7 +25,7 @@ class CpfBloc extends Bloc<CpfEvent, CpfState> {
 
         await Future.delayed(const Duration(seconds: 1));
 
-        final Cpf cpf = Cpf(state.number);
+        final cpf = Cpf(state.number);
         if (cpf.valida()) {
           emitter(CpfStateCpfValid(state));
         } else {

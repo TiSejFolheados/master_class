@@ -6,14 +6,14 @@ void main() {
     const String text = "Fernando Augusto Soares de Rezende *25/02/1983";
     print("Text: $text");
 
-    final Vigenere vigenereEncode = Vigenere(text);
+    final Vigenere vigenereEncode = Vigenere(text: text);
     final String encode = vigenereEncode.encode();
     final String key = vigenereEncode.key!;
 
     print("Encode: $encode");
     print("Key: $key");
 
-    final Vigenere vigenereDecode = Vigenere(encode, key: key);
+    final Vigenere vigenereDecode = Vigenere(text: encode, key: key);
     String decode = vigenereDecode.decode();
     print("Decode: $decode");
 
@@ -24,6 +24,6 @@ void main() {
     print("");
     print("Não informada chave Key");
 
-    expect(()=>Vigenere("FERNANDO").decode(), throwsException);
+    expect(() => Vigenere(text: "FERNANDO").decode(), throwsException);
   });
 }

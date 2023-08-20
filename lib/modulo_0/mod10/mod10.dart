@@ -1,10 +1,10 @@
 class Mod10 {
-  final String card;
+  final String number;
 
-  Mod10(this.card);
+  Mod10(this.number);
 
   bool valida() {
-    String cardNumber = card.replaceAll(RegExp(r"\D"), "");
+    String cardNumber = number.replaceAll(RegExp(r"\D"), "");
 
     if (cardNumber.isEmpty) throw Exception("Nenhum número informado");
 

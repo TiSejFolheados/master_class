@@ -1,28 +1,26 @@
-abstract class VigenereState {
-  final String text;
-  final String key;
+import 'package:master_class/modulo_0/vigenere/vigenere_bloc_state_decode.dart';
+import 'package:master_class/modulo_0/vigenere/vigenere_bloc_state_encode.dart';
 
-  VigenereState({required this.text, required this.key});
+sealed class VigenereState {
+  final VigenereStateEncode encodeState;
+  final VigenereStateDecode decodeState;
 
-  VigenereState.state(VigenereState state) : this(text: state.text, key: state.key);
+  VigenereState({required this.encodeState, required this.decodeState});
 
-  bool get isValidText => text.isNotEmpty;
-
-  bool get isValidKey => text.isNotEmpty;
+  VigenereState.state(VigenereState state) : this(encodeState: state.encodeState, decodeState: state.decodeState);
 }
 
 class VigenereStateInit extends VigenereState {
-  VigenereStateInit({required super.text, required super.key});
+  VigenereStateInit({required super.encodeState, required super.decodeState});
 
-  VigenereStateInit.init() : super(key: "", text: "");
-}
+  VigenereStateInit.init() : super(encodeState: VigenereStateEncodeInit.init(), decodeState: VigenereStateDecodeInit.init());
 
-class VigenereStateLoading extends VigenereState {
-  VigenereStateLoading(VigenereState state) : super.state(state);
-}
-
-class VigenereStateEncode extends VigenereState {
-  final String textEncode;
-
-  VigenereStateEncode(VigenereState state, this.textEncode) : super.state(state);
+  VigenereStateInit.field({
+    required VigenereState state,
+    VigenereStateEncode? encodeState,
+    VigenereStateDecode? decodeState,
+  }) : this(
+          encodeState: encodeState ?? state.encodeState,
+          decodeState: decodeState ?? state.decodeState,
+        );
 }

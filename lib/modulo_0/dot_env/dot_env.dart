@@ -1,10 +1,12 @@
 import 'dart:io';
 
 class DotEnv {
-  final String pathFile = "assets/parameter.env";
+  final String pathFile;
 
-  Future<dynamic> read([String? property]) async {
-    File file = File(pathFile);
+  DotEnv(this.pathFile);
+
+  Future<dynamic> read({String? property}) async {
+    final file = File(pathFile);
 
     if (property != null) {
       return await file.readAsLines().then((List<String> value) {

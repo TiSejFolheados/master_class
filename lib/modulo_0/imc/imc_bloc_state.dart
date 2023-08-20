@@ -1,9 +1,4 @@
-enum ImcStateField {
-  fieldPeso,
-  fieldAltura,
-}
-
-abstract class ImcState {
+sealed class ImcState {
   final double? peso;
   final double? altura;
 
@@ -18,15 +13,6 @@ abstract class ImcState {
           altura: state.altura,
         );
 
-  ImcState.field({
-    required ImcState state,
-    required ImcStateField field,
-    required double? value,
-  }) : this(
-          peso: field == ImcStateField.fieldPeso ? value : state.peso,
-          altura: field == ImcStateField.fieldAltura ? value : state.altura,
-        );
-
   bool get isValidPeso => peso != null;
 
   bool get isValidAltura => altura != null;
@@ -39,12 +25,11 @@ class ImcStateInit extends ImcState {
 
   ImcStateInit.field({
     required ImcState state,
-    required ImcStateField field,
-    required double? value,
-  }) : super.field(
-          state: state,
-          field: field,
-          value: value,
+    double? Function()? peso,
+    double? Function()? altura,
+  }) : this(
+          peso: peso != null ? peso() : state.peso,
+          altura: altura != null ? altura() : state.altura,
         );
 }
 

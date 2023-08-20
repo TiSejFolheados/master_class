@@ -1,4 +1,4 @@
-abstract class Regra3Event {}
+sealed class Regra3Event {}
 
 class Regra3ValueAChanged extends Regra3Event {
   final double? valueA;

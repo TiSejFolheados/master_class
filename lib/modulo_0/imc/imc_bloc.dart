@@ -12,11 +12,11 @@ class ImcBloc extends Bloc<ImcEvent, ImcState> {
   }
 
   void _pesoChanged(ImcPesoChanged event, Emitter<ImcState> emitter) {
-    emitter(ImcStateInit.field(state: state, field: ImcStateField.fieldPeso, value: event.peso));
+    emitter(ImcStateInit.field(state: state, peso: () => event.peso));
   }
 
   void _alturaChanged(ImcAlturaChanged event, Emitter<ImcState> emitter) {
-    emitter(ImcStateInit.field(state: state, field: ImcStateField.fieldAltura, value: event.altura));
+    emitter(ImcStateInit.field(state: state, altura: () => event.altura));
   }
 
   void _reset(ImcReset event, Emitter<ImcState> emitter) {
@@ -29,7 +29,7 @@ class ImcBloc extends Bloc<ImcEvent, ImcState> {
 
       await Future.delayed(const Duration(seconds: 1));
 
-      Imc imc = Imc(peso: state.peso!, altura: state.altura!);
+      final imc = Imc(peso: state.peso!, altura: state.altura!);
       final double calc = imc.calc();
       emitter(ImcStateResult(state, calc, imc.printImc(calc)));
     }

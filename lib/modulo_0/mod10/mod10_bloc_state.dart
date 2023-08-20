@@ -1,4 +1,4 @@
-abstract class Mod10State {
+sealed class Mod10State {
   final String number;
 
   Mod10State(this.number);

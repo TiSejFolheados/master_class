@@ -1,4 +1,4 @@
-abstract class FibonacciEvent {}
+sealed class FibonacciEvent {}
 
 class FibonacciTermoChanged extends FibonacciEvent {
   final int? termos;

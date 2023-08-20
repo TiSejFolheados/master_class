@@ -1,4 +1,4 @@
-abstract class Mod10Event {}
+sealed class Mod10Event {}
 
 class Mod10NumberChanged extends Mod10Event {
   final String number;

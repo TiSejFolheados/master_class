@@ -14,6 +14,33 @@ class CardResult extends StatelessWidget {
     required this.text,
   });
 
+  const CardResult.error({Key? key, required String text})
+      : this(
+          key: key,
+          isColor: true,
+          isError: true,
+          isValid: false,
+          text: text,
+        );
+
+  const CardResult.valid({Key? key, required String text})
+      : this(
+          key: key,
+          isColor: true,
+          isError: false,
+          isValid: true,
+          text: text,
+        );
+
+  const CardResult.invalid({Key? key, required String text})
+      : this(
+          key: key,
+          isColor: true,
+          isError: false,
+          isValid: false,
+          text: text,
+        );
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
