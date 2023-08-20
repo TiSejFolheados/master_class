@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MasterClass 9',
+      debugShowCheckedModeBanner: false,
+
       theme: FlexThemeData.light(
         colors: const FlexSchemeColor(
           primary: Color(0xff00296b),
