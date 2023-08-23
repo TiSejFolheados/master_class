@@ -4,51 +4,37 @@ import 'package:master_class/modulo_0/dot_env/dot_env.dart';
 void main() {
   const path = "assets/parameter.env";
 
-  test("DotEnv - get String", () async {
-    final DotEnv dotEnv = DotEnv(path);
-    print(await dotEnv.read());
+  test("Get All", () async {
+    dynamic value = await DotEnv(path).read();
 
-    const String property = "DATABASE_URL";
-    dynamic value = await dotEnv.read(property: property);
-    print("-------------------------");
-    print("property: $property");
-    print("value: $value");
-    print("type: ${value.runtimeType}");
+    expect(value, isNotEmpty);
   });
 
-  test("DotEnv - get Bool", () async {
-    final DotEnv dotEnv = DotEnv(path);
-    print(await dotEnv.read());
+  test("Get String", () async {
+    const property = "DATABASE_URL";
+    dynamic value = await DotEnv(path).read(property: property);
 
-    const String property = "IS_ADMIN";
-    dynamic value = await dotEnv.read(property: property);
-    print("-------------------------");
-    print("property: $property");
-    print("value: $value");
-    print("type: ${value.runtimeType}");
+    expect(value, isNotEmpty);
   });
 
-  test("DotEnv - get int", () async {
-    final DotEnv dotEnv = DotEnv(path);
-    print(await dotEnv.read());
+  test("Get bool", () async {
+    const property = "IS_ADMIN";
+    dynamic value = await DotEnv(path).read(property: property);
 
-    const String property = "REFRESH_TIME";
-    dynamic value = await dotEnv.read(property: property);
-    print("-------------------------");
-    print("property: $property");
-    print("value: $value");
-    print("type: ${value.runtimeType}");
+    expect(value, isA<bool>());
   });
 
-  test("DotEnv - get double", () async {
-    final DotEnv dotEnv = DotEnv(path);
-    print(await dotEnv.read());
+  test("Get int", () async {
+    const property = "REFRESH_TIME";
+    dynamic value = await DotEnv(path).read(property: property);
 
-    const String property = "DOUBLE_VALUE";
-    dynamic value = await dotEnv.read(property: property);
-    print("-------------------------");
-    print("property: $property");
-    print("value: $value");
-    print("type: ${value.runtimeType}");
+    expect(value, isA<int>());
+  });
+
+  test("Get double", () async {
+    const property = "DOUBLE_VALUE";
+    dynamic value = await DotEnv(path).read(property: property);
+
+    expect(value, isA<double>());
   });
 }

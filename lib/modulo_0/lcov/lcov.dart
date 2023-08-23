@@ -79,7 +79,4 @@ class FileReport {
     required this.linesHit,
     required this.linesVerify,
   });
-
-  @override
-  String toString() => "FileReport(sourceFile: $sourceFile, linesFound: $linesFound, linesHit: $linesHit, linesVerify: ${linesVerify.join("-")}";
 }

@@ -13,9 +13,9 @@ sealed class ImcState {
           altura: state.altura,
         );
 
-  bool get isValidPeso => peso != null;
+  bool get isValidPeso => peso != null && peso! > 0;
 
-  bool get isValidAltura => altura != null;
+  bool get isValidAltura => altura != null && altura! > 0;
 }
 
 class ImcStateInit extends ImcState {

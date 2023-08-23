@@ -2,28 +2,28 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:master_class/modulo_0/vigenere/vigenere.dart';
 
 void main() {
-  test("Vigenere Encode", () {
-    const String text = "Fernando Augusto Soares de Rezende *25/02/1983";
-    print("Text: $text");
+  test("Encode/Decode", () {
+    const text = "Fernando Augusto Soares de Rezende *25/02/1983";
 
-    final Vigenere vigenereEncode = Vigenere(text: text);
-    final String encode = vigenereEncode.encode();
-    final String key = vigenereEncode.key!;
+    final vigenereEncode = Vigenere(text: text);
+    final encode = vigenereEncode.encode();
+    final key = vigenereEncode.key!;
 
-    print("Encode: $encode");
-    print("Key: $key");
+    final vigenereDecode = Vigenere(text: encode, key: key);
+    final decode = vigenereDecode.decode();
 
-    final Vigenere vigenereDecode = Vigenere(text: encode, key: key);
-    String decode = vigenereDecode.decode();
-    print("Decode: $decode");
-
-    expect(decode, text.toUpperCase());
+    expect(decode, equals(text.toUpperCase()));
   });
 
-  test("Vigenere - key null", () {
-    print("");
-    print("Não informada chave Key");
-
-    expect(() => Vigenere(text: "FERNANDO").decode(), throwsException);
+  group("Exceção", () {
+    test("Encode key tamanho diferente do texto", () {
+      expect(() => Vigenere(text: "FERNANDO", key: "ABC").encode(), throwsA(isA<Exception>()));
+    });
+    test("Decode key tamanho diferente do texto", () {
+      expect(() => Vigenere(text: "FERNANDO", key: "ABC").decode(), throwsA(isA<Exception>()));
+    });
+    test("Decode key null", () {
+      expect(() => Vigenere(text: "FERNANDO").decode(), throwsA(isA<Exception>()));
+    });
   });
 }

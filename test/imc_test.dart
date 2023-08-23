@@ -2,64 +2,90 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:master_class/modulo_0/imc/imc.dart';
 
 void main() {
-  test("IMC - Magreza", () {
-    const double altura = 1.83;
-    const double peso = 50;
-    final Imc imc = Imc(altura: altura, peso: peso);
-    double calc = imc.calc();
-    String analise = imc.analise(calc);
+  test("Magreza", () {
+    const altura = 1.83;
+    const peso = 50.0;
+
+    final imc = Imc(altura: altura, peso: peso);
+    final calc = imc.calc();
+    final analise = imc.analise(calc);
+
     imc.printImc(calc);
 
-    expect(analise, "Magreza");
+    expect(calc, equals(14.9));
+    expect(analise, equals("Magreza"));
   });
 
-  test("IMC - Normal", () {
-    const double altura = 1.83;
-    const double peso = 83;
-    final Imc imc = Imc(altura: altura, peso: peso);
+  test("Normal", () {
+    const altura = 1.83;
+    const peso = 83.0;
+    final imc = Imc(altura: altura, peso: peso);
 
-    double calc = imc.calc();
-    String analise = imc.analise(calc);
+    final calc = imc.calc();
+    final analise = imc.analise(calc);
+
     imc.printImc(calc);
 
-    expect(analise, "Normal");
+    expect(calc, equals(24.8));
+    expect(analise, equals("Normal"));
   });
 
-  test("IMC - Sobrepeso", () {
-    const double altura = 1.83;
-    const double peso = 100;
-    final Imc imc = Imc(altura: altura, peso: peso);
+  test("Sobrepeso", () {
+    const altura = 1.83;
+    const peso = 100.0;
+    final imc = Imc(altura: altura, peso: peso);
 
-    double calc = imc.calc();
-    String analise = imc.analise(calc);
+    final calc = imc.calc();
+    final analise = imc.analise(calc);
+
     imc.printImc(calc);
 
-    expect(analise, "Sobrepeso");
+    expect(calc, equals(29.9));
+    expect(analise, equals("Sobrepeso"));
   });
 
-  test("IMC - Obesidade", () {
-    const double altura = 1.83;
-    const double peso = 120;
-    final Imc imc = Imc(altura: altura, peso: peso);
+  test("Obesidade", () {
+    const altura = 1.83;
+    const peso = 120.0;
+    final imc = Imc(altura: altura, peso: peso);
 
-    double calc = imc.calc();
-    String analise = imc.analise(calc);
+    final calc = imc.calc();
+    final analise = imc.analise(calc);
+
     imc.printImc(calc);
 
-    expect(analise, "Obesidade");
+    expect(calc, equals(35.8));
+    expect(analise, equals("Obesidade"));
   });
 
-  test("IMC - Obesidade Grave", () {
-    const double altura = 1.83;
-    const double peso = 200;
-    final Imc imc = Imc(altura: altura, peso: peso);
+  test("Obesidade Grave", () {
+    const altura = 1.83;
+    const peso = 200.0;
+    final imc = Imc(altura: altura, peso: peso);
 
-    double calc = imc.calc();
-    String analise = imc.analise(calc);
+    final calc = imc.calc();
+    final analise = imc.analise(calc);
+
     imc.printImc(calc);
 
-    expect(analise, "Obesidade Grave");
+    expect(calc, equals(59.7));
+    expect(analise, equals("Obesidade Grave"));
   });
 
+  group("Exceção", ()
+  {
+    test("Altura 0", () {
+      const altura = 0.0;
+      const peso = 85.0;
 
+      expect(() => Imc(altura: altura, peso: peso), throwsA(isA<Exception>()));
+    });
+
+    test("Peso 0", () {
+      const altura = 1.83;
+      const peso = 0.0;
+
+      expect(() => Imc(altura: altura, peso: peso), throwsA(isA<Exception>()));
+    });
+  });
 }

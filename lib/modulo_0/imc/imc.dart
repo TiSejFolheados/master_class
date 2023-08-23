@@ -14,7 +14,15 @@ class Imc {
   final double peso;
   final double altura;
 
-  Imc({required this.peso, required this.altura});
+  Imc({required this.peso, required this.altura}) {
+    if (peso <= 0) {
+      throw Exception("O peso deve ser maior que 0!");
+    }
+
+    if (altura <= 0) {
+      throw Exception("A altura deve ser maior que 0!");
+    }
+  }
 
   double calc() {
     double calc = peso / (altura * altura);
