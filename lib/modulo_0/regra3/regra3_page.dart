@@ -5,7 +5,7 @@ import 'package:master_class/modulo_0/regra3/regra3_bloc.dart';
 import 'package:master_class/modulo_0/regra3/regra3_bloc_event.dart';
 import 'package:master_class/modulo_0/regra3/regra3_bloc_state.dart';
 import 'package:master_class/util/widget/appbar_default.dart';
-import 'package:master_class/util/widget/button_loading.dart';
+import 'package:master_class/util/widget/loading_button.dart';
 import 'package:master_class/util/widget/card_result.dart';
 import 'package:master_class/util/widget/input_text.dart';
 

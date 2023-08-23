@@ -6,7 +6,7 @@ import 'package:master_class/modulo_0/vigenere/vigenere_bloc_state.dart';
 import 'package:master_class/modulo_0/vigenere/vigenere_bloc_state_decode.dart';
 import 'package:master_class/modulo_0/vigenere/vigenere_bloc_state_encode.dart';
 import 'package:master_class/util/widget/appbar_default.dart';
-import 'package:master_class/util/widget/button_loading.dart';
+import 'package:master_class/util/widget/loading_button.dart';
 import 'package:master_class/util/widget/card_result.dart';
 import 'package:master_class/util/widget/card_rotulo.dart';
 import 'package:master_class/util/widget/input_text.dart';
